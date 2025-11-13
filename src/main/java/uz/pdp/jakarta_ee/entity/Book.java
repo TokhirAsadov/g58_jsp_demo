@@ -9,10 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User {
+public class Book {
     private Integer id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String password;
+    private String name;
+    private Integer pages;
 }

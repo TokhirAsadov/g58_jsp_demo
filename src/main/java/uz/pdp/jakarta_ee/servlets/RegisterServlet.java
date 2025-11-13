@@ -38,11 +38,11 @@ public class RegisterServlet extends HttpServlet {
         System.out.println(repassword);
 
         User user = User.builder()
-                .id(UUID.randomUUID())
-                .createdAt(new Date())
+//                .id(UUID.randomUUID())
+//                .createdAt(new Date())
                 .firstName(firstname)
                 .lastName(lastname)
-                .username(username)
+//                .username(username)
                 .email(email)
                 .password(password)
                 .build();
