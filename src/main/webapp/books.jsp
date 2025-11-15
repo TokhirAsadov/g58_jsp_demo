@@ -89,10 +89,7 @@
         if (confirm('Are you sure you want to delete this book?')) {
             // Fetch API yordamida so'rov yuborish
             fetch('/books?id='+bookId, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                }
+                method: 'DELETE'
             })
                 .then(response => {
                   window.location.href = '/books';
