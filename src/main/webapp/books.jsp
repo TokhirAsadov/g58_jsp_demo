@@ -16,19 +16,39 @@
     <div id="notification" class="notification hidden"></div>
 
     <div class="book-form">
-        <h2 id="form-title">Add New Book</h2>
+        <h2 id="form-title">
+            <%
+                String id = request.getParameter("id");
+                out.println(id==null ? "Add New Book" : "Update Book");
+            %>
+        </h2>
         <form id="bookForm" action="/books" method="post">
             <input type="hidden" id="bookId">
             <div class="form-group">
-                <label for="bookName">Book Name</label>
-                <input type="text" id="bookName" name="name" required>
+                <%
+                    if (id!=null){
+                        String name = request.getParameter("name");
+                        out.println("<label for=\"bookName\">Book Name</label><input type=\"text\" id=\"bookName\" name=\"name\" value="+name+" required>");
+                    } else {
+                        out.println("<label for=\"bookName\">Book Name</label><input type=\"text\" id=\"bookName\" name=\"name\" required>");
+                    }
+                %>
+
             </div>
             <div class="form-group">
-                <label for="bookPages">Pages</label>
-                <input type="number" id="bookPages" name="pages" required>
+                <%
+                    if (id!=null){
+                        Integer pages = Integer.valueOf(request.getParameter("pages"));
+                        out.println("<label for=\"bookPages\">Pages</label><input type=\"text\" id=\"bookPages\" name=\"pages\" value="+pages+" required>");
+                    } else {
+                        out.println("<label for=\"bookPages\">Pages</label><input type=\"text\" id=\"bookPages\" name=\"pages\" required>");
+                    }
+                %>
             </div>
             <div class="form-group">
-                <button type="submit" id="submitBtn" class="btn-success">Add Book</button>
+                <button type="submit" id="submitBtn" class="btn-success">
+                    <%  out.println(id!=null ? "Update " : "Add "); %>
+                    Book</button>
             </div>
         </form>
     </div>
@@ -51,7 +71,7 @@
                         "                        <td>"+books.get(i).getPages()+"</td>\n" +
                         "                        <td>\n" +
                         "                            <div class=\"action-buttons\">\n" +
-                        "                                <button class=\"btn-success\" onclick=\"bookManager.editBook("+books.get(i).getId()+")\">Edit</button>\n" +
+                        "                                <a class=\"btn-success\" href=\"/books?id="+books.get(i).getId()+"\">Edit</button>\n" +
                         "                                <button class=\"btn-danger\" onclick=\"bookManager.deleteBook("+books.get(i).getId()+")\">Delete</button>\n" +
                         "                            </div>\n" +
                         "                        </td></tr>");

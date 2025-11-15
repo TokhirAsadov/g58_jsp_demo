@@ -50,6 +50,27 @@ public class BookDAO {
             return false;
         }
     }
+
+    public static Book findBookById(String id) {
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/g58", "postgres", "123");
+            PreparedStatement prps = connection.prepareStatement("select name, pages from books where id=?;");
+            prps.setInt(1, Integer.parseInt(id));
+
+            ResultSet resultSet = prps.executeQuery();
+            Book book = null;
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                int pages = resultSet.getInt("pages");
+                book = new Book(Integer.valueOf(id), name, pages);
+            }
+            return book;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     // createBook
 
     // findById

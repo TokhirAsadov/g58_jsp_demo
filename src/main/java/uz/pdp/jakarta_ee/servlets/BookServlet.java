@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import uz.pdp.jakarta_ee.entity.Book;
 import uz.pdp.jakarta_ee.server.BookDAO;
 
 import java.io.IOException;
@@ -16,6 +17,8 @@ public class BookServlet extends HttpServlet {
         System.out.println("Servlet ishladi...........");
         String id = req.getParameter("id");
         if (id!=null){
+            Book book = BookDAO.findBookById(id);
+            resp.sendRedirect("books.jsp?id="+id+"&name="+book.getName()+"&pages="+book.getPages());
             // BookDAO.findById(id)
         }
         else {
