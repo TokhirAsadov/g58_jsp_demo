@@ -34,15 +34,25 @@ public class BookServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-        System.out.println("id="+id);
         String name = req.getParameter("name");
         Integer pages = Integer.valueOf(req.getParameter("pages"));
-        boolean isSaved = BookDAO.createBook(name, pages);
-        if (isSaved){
-            System.out.println("saqlandi...");
-            resp.sendRedirect("books.jsp");
+        if (id==null) {
+            System.out.println("id=" + id);
+            boolean isSaved = BookDAO.createBook(name, pages);
+            if (isSaved) {
+                System.out.println("saqlandi...");
+                resp.sendRedirect("books.jsp");
+            } else {
+                resp.sendRedirect("books_error.jsp");
+            }
         } else {
-            resp.sendRedirect("books_error.jsp");
+            boolean isUpdated = BookDAO.updateBook(id, name, pages);
+            if (isUpdated) {
+                System.out.println("update qilindi...");
+                resp.sendRedirect("books.jsp");
+            } else {
+                resp.sendRedirect("books_error.jsp");
+            }
         }
 
     }

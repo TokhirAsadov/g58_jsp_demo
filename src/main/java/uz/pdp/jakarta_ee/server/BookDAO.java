@@ -71,6 +71,27 @@ public class BookDAO {
             return null;
         }
     }
+
+    public static boolean updateBook(String id, String name, Integer pages) {
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/g58", "postgres", "123");
+            PreparedStatement prps = connection.prepareStatement("update books set name=?, pages=? where id=?;");
+            prps.setString(1, name);
+            prps.setInt(2,pages);
+            prps.setInt(3, Integer.parseInt(id));
+
+            prps.execute();
+            Book book1 = DB.books.stream().filter(book -> book.getId().equals(Integer.valueOf(id))).findFirst().get();
+            book1.setName(name);
+            book1.setPages(pages);
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     // createBook
 
     // findById
