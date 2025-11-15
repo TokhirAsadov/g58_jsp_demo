@@ -33,6 +33,8 @@ public class BookServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String id = req.getParameter("id");
+        System.out.println("id="+id);
         String name = req.getParameter("name");
         Integer pages = Integer.valueOf(req.getParameter("pages"));
         boolean isSaved = BookDAO.createBook(name, pages);
