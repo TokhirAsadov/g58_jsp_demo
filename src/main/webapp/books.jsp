@@ -75,7 +75,7 @@
                         "                        <td>\n" +
                         "                            <div class=\"action-buttons\">\n" +
                         "                                <a class=\"btn-success\" href=\"/books?id="+books.get(i).getId()+"\">Edit</button>\n" +
-                        "                                <button class=\"btn-danger\" onclick=\"bookManager.deleteBook("+books.get(i).getId()+")\">Delete</button>\n" +
+                        "                                <button class=\"btn-danger\" onclick=\"deleteBook("+books.get(i).getId()+")\">Delete</button>\n" +
                         "                            </div>\n" +
                         "                        </td></tr>");
             }
@@ -84,6 +84,44 @@
     </table>
 </div>
 
+<script>
+    function deleteBook(bookId) {
+        if (confirm('Are you sure you want to delete this book?')) {
+            // Fetch API yordamida so'rov yuborish
+            fetch('/books?id='+bookId, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            })
+                .then(response => {
+                  window.location.href = '/books';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showNotification('Error deleting book!', 'error');
+                });
+        }
+    }
+    function showNotification(message, type) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.className = 'notification ' + type;
+        notification.classList.remove('hidden');
 
+        setTimeout(() => {
+            notification.classList.add('hidden');
+        }, 3000);
+    }
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const action = urlParams.get('action');
+        const message = urlParams.get('message');
+
+        if (action === 'deleted' && message) {
+            showNotification(decodeURIComponent(message), 'success');
+        }
+    };
+</script>
 </body>
 </html>

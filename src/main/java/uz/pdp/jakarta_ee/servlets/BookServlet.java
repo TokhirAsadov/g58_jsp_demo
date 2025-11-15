@@ -60,6 +60,15 @@ public class BookServlet extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // BookDAO.deleteById(id)
+        System.out.println("Delete api....");
+        String id = req.getParameter("id");
+        boolean isDeleted = BookDAO.deleteBookById(id);
+        if (isDeleted) {
+            System.out.println("delete qilindi...");
+            resp.sendRedirect("books.jsp");
+        } else {
+            resp.sendRedirect("books_error.jsp");
+        }
     }
 
     @Override

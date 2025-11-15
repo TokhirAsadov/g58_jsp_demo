@@ -4,6 +4,8 @@ import uz.pdp.jakarta_ee.db.DB;
 import uz.pdp.jakarta_ee.entity.Book;
 
 import java.sql.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BookDAO {
 
@@ -85,6 +87,25 @@ public class BookDAO {
             Book book1 = DB.books.stream().filter(book -> book.getId().equals(Integer.valueOf(id))).findFirst().get();
             book1.setName(name);
             book1.setPages(pages);
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean deleteBookById(String id) {
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/g58", "postgres", "123");
+            PreparedStatement prps = connection.prepareStatement("delete from books where id=?;");
+            prps.setInt(1, Integer.parseInt(id));
+
+            prps.execute();
+            List<Book> collect = DB.books.stream().filter(book -> !book.getId().equals(Integer.valueOf(id))).collect(Collectors.toList());
+            DB.books.clear();
+            DB.books.addAll(collect);
 
             return true;
         } catch (Exception e) {
