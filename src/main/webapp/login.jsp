@@ -51,7 +51,7 @@
     </div>
 
     <div class="register-link">
-        Don't have an account? <a href="#">Create Account</a>
+        Don't have an account? <a href="/register.jsp">Create Account</a>
     </div>
 </div>
 
