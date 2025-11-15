@@ -23,7 +23,10 @@
             %>
         </h2>
         <form id="bookForm" action="/books" method="post">
-            <input type="hidden" id="bookId">
+            <% if (id!=null) {
+                out.println("<input type=\"hidden\" id=\"bookId\" name=\""+id+"\" >");
+            }%>
+
             <div class="form-group">
                 <%
                     if (id!=null){
